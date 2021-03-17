@@ -14,7 +14,7 @@ export default function Account() {
     });
   }, []);
 
-  if (login === null) return <Loading isVisible={true} text="Cargando...." />;
+  if (login === null) return <Loading isVisible={true} text="Cargando..." />;
 
   return login ? <UserLogged /> : <UserGuest />;
 }
