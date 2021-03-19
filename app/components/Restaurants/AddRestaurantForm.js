@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Alert, Dimensions } from "react-native";
 import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
-import { map, size } from "lodash";
+import { filter, map, size } from "lodash";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
+
+const widthScreen = Dimensions.get("window").width;
 
 export default function AddRestaurantForm(props) {
   const { toastRef, setIsVisible, navigation } = props;
@@ -15,6 +17,7 @@ export default function AddRestaurantForm(props) {
   const addRestaurant = () => {};
   return (
     <ScrollView style={styles.scrollView}>
+      <ImageRestaurant imagenRestaurant={imageSelected[0]} />
       <FormAdd
         setRestaurantName={setRestaurantName}
         setRestaurantAddress={setRestaurantAddress}
@@ -31,6 +34,19 @@ export default function AddRestaurantForm(props) {
         buttonStyle={styles.btnAddRestaurant}
       />
     </ScrollView>
+  );
+}
+
+function ImageRestaurant(props) {
+  const { imagenRestaurant } = props;
+
+  return (
+    <View style={styles.viewPhoto}>
+      <Image
+        source={{ uri: imagenRestaurant }}
+        style={{ width: widthScreen, height: 200 }}
+      />
+    </View>
   );
 }
 
@@ -64,6 +80,7 @@ function FormAdd(props) {
 
 function UploadImage(props) {
   const { toastRef, imageSelected, setImageSelected } = props;
+
   const imageSelect = async () => {
     const resultPermission = await Permissions.askAsync(
       Permissions.MEDIA_LIBRARY
@@ -91,9 +108,33 @@ function UploadImage(props) {
     }
   };
 
+  const removeImage = (image) => {
+    Alert.alert(
+      "Eliminar Imagen",
+      "¿Seguro que quieres eliminar la Imagen?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            setImageSelected(
+              filter(imageSelected, (imageUrl) => imageUrl !== image)
+            );
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+  };
+
   return (
     <View style={styles.viewImage}>
-      {size(imageSelected) < 5 && (
+      {size(imageSelected) < 4 && (
         <Icon
           type="material-community"
           name="camera"
@@ -102,13 +143,14 @@ function UploadImage(props) {
           onPress={imageSelect}
         />
       )}
-      {map(imageSelected, (imageRestaurant, index) => {
+      {map(imageSelected, (imageRestaurant, index) => (
         <Avatar
           key={index}
           style={styles.miniatureStyle}
           source={{ uri: imageRestaurant }}
-        />;
-      })}
+          onPress={() => removeImage(imageRestaurant)}
+        />
+      ))}
     </View>
   );
 }
@@ -152,5 +194,10 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginRight: 10,
+  },
+  viewPhoto: {
+    alignItems: "center",
+    height: 200,
+    marginBottom: 20,
   },
 });
