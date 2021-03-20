@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Alert,
-  Dimensions,
-  Text,
-} from "react-native";
+import { StyleSheet, View, ScrollView, Alert, Dimensions } from "react-native";
 import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
 import { filter, map, size } from "lodash";
 import * as Permissions from "expo-permissions";
@@ -42,7 +35,7 @@ export default function AddRestaurantForm(props) {
         setImageSelected={setImageSelected}
       />
       <Button
-        title="Crear Restaurante"
+        title="Crear Negocio"
         onPress={addRestaurant}
         buttonStyle={styles.btnAddRestaurant}
       />
@@ -83,7 +76,7 @@ function FormAdd(props) {
   return (
     <View style={styles.viewForm}>
       <Input
-        placeholder="Nombre del Restaurante"
+        placeholder="Nombre del Negocio"
         containerStyle={styles.input}
         onChange={(e) => setRestaurantName(e.nativeEvent.text)}
       />
@@ -99,7 +92,7 @@ function FormAdd(props) {
         }}
       />
       <Input
-        placeholder="Descripción del Restaurante"
+        placeholder="Descripción del Negocio"
         multiline={true}
         inputContainerStyle={styles.textArea}
         onChange={(e) => setRestaurantDescription(e.nativeEvent.text)}
@@ -158,7 +151,7 @@ function Map(props) {
             <MapView.Marker
               coordinate={{
                 latitude: location.latitude,
-                longitude: longitude.longitude,
+                longitude: location.longitude,
               }}
               draggable
             />
@@ -321,7 +314,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#a60d0d",
   },
   viewMapBtnContainerSave: {
-    paddingRigth: 5,
+    paddingRight: 5,
   },
   viewMapBtnSave: {
     backgroundColor: "#00a680",
