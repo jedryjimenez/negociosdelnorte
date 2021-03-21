@@ -20,9 +20,11 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+      "package": "com.devnicaragua.negociosdelnorte",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBwn0pB_11f9PZ2o7h7XIt5fcynOJe1n4Q"
+        }
       },
       "permissions": [
         "MEDIA_LIBRARY",
